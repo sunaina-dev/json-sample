@@ -1,0 +1,61 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+
+    <div>
+        <div id="custData"></div>
+    </div>
+
+    <div>
+        <input type="button" value="GetData" onclick="onLoad()" />
+    </div>
+	<script>
+
+
+		function onLoad(){
+
+            var customerInfo=[];
+            var customerInfoObject=routeInfo.route.organization.routeList.routes[0].stops;
+            $.each(customerInfoObject,function(index,rec){
+              $.each(rec,function(i,r){
+                    $.merge(customerInfo, r.customerList.customers);
+              });
+               
+            });
+             var table = $('<table>');
+				table.attr('border','1');
+				var tr = $('<tr>');
+				var td = $('<td>');
+				td.html("Customer Number");
+				tr.append(td);
+				td = $('<td>');
+				td.html('Custromer Name');
+				tr.append(td);
+				td = $('<td>');
+				td.html('Zip Code');
+				tr.append(td);
+				table.append(tr);
+				for( var i=0; i<customerInfo.length;i++){
+					var tr = $('<tr>');
+					var td = $('<td>');
+					td.html(customerInfo[i].custNumber);
+					tr.append(td);
+					td = $('<td>');
+					td.html(customerInfo[i].custName);
+					tr.append(td);
+					td = $('<td>');
+					td.html(customerInfo[i].zipcode);
+					tr.append(td);
+					table.append(tr);
+				}
+				$('#custData').append(table);
+		}
+	</script>
+</body>
+</html>
